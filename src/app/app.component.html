@@ -1,6 +1,5 @@
 
 
-
 <div class="wrapper">
   <div class="task-input">
     <input [(ngModel)]="newTodo" (keyup.enter)="setValue()" type="text" placeholder="Add a New Task + Enter">
@@ -14,15 +13,6 @@
     <button type="button" class="clear-btn" (click)="clearAll()">Clear All</button>
   </div>
   <ul class="task-box">
-    <li class="task" *ngFor="let todo of selectedTodos(statusSelected)">
-      <label for="0">
-          <input type="checkbox" id={{todo.id}} [(ngModel)]="todo.completed">
-          <p [ngClass]="{'checked': todo.completed}" >{{todo.id}} - {{todo.todo}}</p>
-          
-      </label>
-      <div class="settings">
-          <button type="button" class="clear-btn" (click)="deleteTodo(todo.id)">Delete</button>
-      </div>
-  </li>
+    <app-todo class="task" *ngFor="let todo of selectedTodos(statusSelected)" [id]=todo.id [todo]="todo.todo" [completed]="todo.completed"></app-todo>
   </ul>
 </div>

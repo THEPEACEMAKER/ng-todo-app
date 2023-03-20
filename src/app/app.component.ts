@@ -7,14 +7,6 @@ import { Todo } from './Todo';
   styleUrls: ['./app.component.css']
 })
 
-// interface Todo {
-//   id: number,
-//   todo: string,
-//   completed: boolean,
-//   userId: number
-// }
-    
-
 export class AppComponent {
   title: string = 'todo-app';
 
