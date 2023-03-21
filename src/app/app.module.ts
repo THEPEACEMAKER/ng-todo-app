@@ -8,9 +8,11 @@ import { TodoComponent } from './todo/todo.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
+import { Page404Component } from './page404/page404.component';
 
 const routes: Routes = [
-  {path:'', component: TodoListComponent}
+  {path:'', component: TodoListComponent},
+  {path:'**', component: Page404Component}
 ];
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ const routes: Routes = [
     TodoComponent,
     NavBarComponent,
     FooterComponent,
-    TodoListComponent
+    TodoListComponent,
+    Page404Component
   ],
   imports: [
     BrowserModule,
