@@ -1,0 +1,20 @@
+<div class="wrapper">
+    <div class="task-input">
+        <input [(ngModel)]="newTodo" (keyup.enter)="setValue()" type="text" placeholder="Add a New Task + Enter">
+    </div>
+    <div class="controls">
+        <div class="filters">
+            <span class="active" id="all" [ngClass]="{'active': statusSelected == 'all'}"
+                (click)="selectByStatus('all')">All</span>
+            <span id="pending" [ngClass]="{'active': statusSelected == 'pending'}"
+                (click)="selectByStatus('pending')">Pending</span>
+            <span id="completed" [ngClass]="{'active': statusSelected == 'completed'}"
+                (click)="selectByStatus('completed')">Completed</span>
+        </div>
+        <button type="button" class="clear-btn" (click)="clearAll()">Clear All</button>
+    </div>
+    <ul class="task-box">
+        <app-todo class="task" *ngFor="let todo of selectedTodos(statusSelected)" [id]=todo.id [todo]="todo.todo"
+            [completed]="todo.completed" (deleteEvent)="deleteTodo($event)"></app-todo>
+    </ul>
+</div>
