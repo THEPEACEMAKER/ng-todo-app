@@ -9,9 +9,11 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { Page404Component } from './page404/page404.component';
+import { TodoDetailsComponent } from './todo-details/todo-details.component';
 
 const routes: Routes = [
   {path:'', component: TodoListComponent},
+  {path:'todos/:id/:todo/:completed', component: TodoDetailsComponent},
   {path:'**', component: Page404Component}
 ];
 @NgModule({
@@ -21,7 +23,8 @@ const routes: Routes = [
     NavBarComponent,
     FooterComponent,
     TodoListComponent,
-    Page404Component
+    Page404Component,
+    TodoDetailsComponent
   ],
   imports: [
     BrowserModule,

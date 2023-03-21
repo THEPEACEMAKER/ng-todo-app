@@ -1,10 +1,11 @@
 <li class="task">
     <label for="0">
         <input type="checkbox" id={{id}} [(ngModel)]="completed">
-        <p [ngClass]="{'checked': completed}" >{{id}} - {{todo}}</p>
-        
+        <p [ngClass]="{'checked': completed}">{{id}} - {{todo}}</p>
+
     </label>
     <div class="settings">
         <button type="button" class="clear-btn" (click)="deleteTodo()">Delete</button>
+        <button type="button" class="clear-btn" routerLink="/todos/{{id}}/{{todo}}/{{completed}}">Details</button>
     </div>
 </li>
