@@ -13,6 +13,7 @@
     <button type="button" class="clear-btn" (click)="clearAll()">Clear All</button>
   </div>
   <ul class="task-box">
-    <app-todo class="task" *ngFor="let todo of selectedTodos(statusSelected)" [id]=todo.id [todo]="todo.todo" [completed]="todo.completed"></app-todo>
+    <app-todo class="task" *ngFor="let todo of selectedTodos(statusSelected)"[id]=todo.id [todo]="todo.todo" [completed]="todo.completed" 
+    (deleteEvent)="deleteTodo($event)"></app-todo>
   </ul>
 </div>

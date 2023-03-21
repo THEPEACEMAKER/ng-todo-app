@@ -1,11 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
-  // template: `
-  //     Say {{ id }} - {{ todo }} - {{ completed }}
-  // `,
   styleUrls: ['./todo.component.css']
 })
 export class TodoComponent {
@@ -16,5 +13,12 @@ export class TodoComponent {
   @Input() 
   completed!: boolean;
   
+  @Output() deleteEvent = new EventEmitter<number>();
+  
   constructor() { }
+
+  deleteTodo() {
+    this.deleteEvent.emit(this.id)
+  }
+
 }
