@@ -129,7 +129,11 @@ export class TodosService {
   ];
   constructor() { }
 
-  getTodos(){
+  getTodos(): Todo[]{
     return this.todos;
+  }
+
+  getTodosNumber():number{
+    return this.todos.length;
   }
 }
