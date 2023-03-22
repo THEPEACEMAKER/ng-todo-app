@@ -10,10 +10,13 @@ import { FooterComponent } from './footer/footer.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { Page404Component } from './page404/page404.component';
 import { TodoDetailsComponent } from './todo-details/todo-details.component';
+import { AuthService } from './auth/auth.service'
+import { AuthGuard } from './auth/auth.guard'
 
 const routes: Routes = [
   {path:'', component: TodoListComponent},
   {path:'todos/:id/:todo/:completed', component: TodoDetailsComponent},
+  {path:'signin', component: TodoDetailsComponent ,canActivate:[AuthGuard]},
   {path:'**', component: Page404Component}
 ];
 @NgModule({
@@ -31,7 +34,7 @@ const routes: Routes = [
     FormsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
