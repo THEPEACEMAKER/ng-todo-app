@@ -129,6 +129,8 @@ export class TodosService {
     { id: 30, todo: 'Take cat on a walk', completed: false, userId: 15 },
   ];
 
+  deletedTodos: Todo[] = [];
+
   private todosLength = new BehaviorSubject<number>(this.todos.length);
   todosLength$ = this.todosLength.asObservable();
   
@@ -139,8 +141,8 @@ export class TodosService {
   }
 
   deleteTodo(index: number) {
-    // this.todos = this.todos.filter(todo => todo.id != id);
-    this.todos.splice(index,1);
+    let deletedElements = this.todos.splice(index,1);
+    this.deletedTodos.push(deletedElements[0]);
     this.todosLength.next(this.todos.length);
   }
 
