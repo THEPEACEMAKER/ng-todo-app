@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Todo } from './Todo';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -127,13 +128,20 @@ export class TodosService {
     { id: 29, todo: 'Make own LEGO creation', completed: false, userId: 30 },
     { id: 30, todo: 'Take cat on a walk', completed: false, userId: 15 },
   ];
+
+  private todosLength = new BehaviorSubject<number>(this.todos.length);
+  todosLength$ = this.todosLength.asObservable();
+  
   constructor() { }
 
   getTodos(): Todo[]{
     return this.todos;
   }
 
-  getTodosNumber():number{
-    return this.todos.length;
+  deleteTodo(index: number) {
+    // this.todos = this.todos.filter(todo => todo.id != id);
+    this.todos.splice(index,1);
+    this.todosLength.next(this.todos.length);
   }
+
 }
