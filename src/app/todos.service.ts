@@ -140,8 +140,8 @@ export class TodosService {
     return this.todos;
   }
 
-  deleteTodo(index: number) {
-    let deletedElements = this.todos.splice(index,1);
+  deleteTodo(id: number): void {
+    let deletedElements = this.todos.splice(this.todos.findIndex(a => a.id === id) , 1)
     this.deletedTodos.push(deletedElements[0]);
     this.todosLength.next(this.todos.length);
   }
