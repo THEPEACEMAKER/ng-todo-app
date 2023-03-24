@@ -1,45 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Todo } from './Todo';
 import { TodosService } from '../todos.service'
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.css']
 })
-export class TodoListComponent implements OnInit {
+export class TodoListComponent {
   title: string = 'todo-app';
-
-  todos: Todo[] = []
+  
+  todos$: Observable<Todo[]> = this.TodosService.getSelectedTodos$();
   constructor(private TodosService: TodosService) { }
-  ngOnInit() {
-    this.todos = this.TodosService.getTodos();
-  }
 
   newTodo: string = '';
-  setValue() {
-    this.todos.push({
-      id: !this.todos.length ? 1 : this.todos[this.todos.length - 1].id + 1,
-      todo: this.newTodo,
-      completed: false,
-      userId: 26,
-    });
-    this.newTodo = '';
-  }
+  // setValue() {
+  //   this.todos.push({
+  //     id: !this.todos.length ? 1 : this.todos[this.todos.length - 1].id + 1,
+  //     todo: this.newTodo,
+  //     completed: false,
+  //     userId: 26,
+  //   });
+  //   this.newTodo = '';
+  // }
 
   statusSelected: string = 'all';
   selectByStatus(status: string) {
-    this.statusSelected = status;
-  }
-
-  selectedTodos(status: string) {
-    return this.statusSelected == 'all'
-      ? this.todos
-      : this.todos.filter((todo: Todo) => {
-          return this.statusSelected == 'pending'
-            ? !todo.completed
-            : todo.completed;
-        });
+    this.TodosService.selectByStatus(status);
   }
 
   deleteTodo(id: number):void {
@@ -47,7 +35,7 @@ export class TodoListComponent implements OnInit {
   }
 
   clearAll() {
-    this.todos = [];
+    // this.todos = [];
   }
 
 }

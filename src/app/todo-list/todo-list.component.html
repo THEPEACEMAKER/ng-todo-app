@@ -1,6 +1,7 @@
 <div class="wrapper">
     <div class="task-input">
-        <input [(ngModel)]="newTodo" (keyup.enter)="setValue()" type="text" placeholder="Add a New Task + Enter">
+        <!-- <input [(ngModel)]="newTodo" (keyup.enter)="setValue()" type="text" placeholder="Add a New Task + Enter"> -->
+        <input [(ngModel)]="newTodo" type="text" placeholder="Add a New Task + Enter">
     </div>
     <div class="controls">
         <div class="filters">
@@ -14,7 +15,7 @@
         <button type="button" class="clear-btn" (click)="clearAll()">Clear All</button>
     </div>
     <ul class="task-box">
-        <app-todo class="task" *ngFor="let todo of selectedTodos(statusSelected)" [id]=todo.id [todo]="todo.todo"
+        <app-todo class="task" *ngFor="let todo of todos$ | async" [id]=todo.id [todo]="todo.todo"
             [completed]="todo.completed" (deleteEvent)="deleteTodo($event)"></app-todo>
     </ul>
 </div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Todo } from './Todo';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -131,19 +132,38 @@ export class TodosService {
 
   deletedTodos: Todo[] = [];
 
-  private todosLength = new BehaviorSubject<number>(this.todos.length);
-  todosLength$ = this.todosLength.asObservable();
+  todosLength$: BehaviorSubject<number> = new BehaviorSubject<number>(this.todos.length);
   
   constructor() { }
 
-  getTodos(): Todo[]{
-    return this.todos;
+  private statusSelected = new BehaviorSubject<string>('all');
+
+  selectByStatus(status: string) {
+    this.statusSelected.next(status);
+  }
+
+  getSelectedTodos$(): Observable<Todo[]>{
+    // returns a new Observable every time the statusSelected value changes.
+    return this.statusSelected.pipe(
+      map(statusSelected => {
+        if (statusSelected == 'all'){
+          return this.todos;
+        }else if(statusSelected == 'pending'){
+          return this.todos.filter(todo =>!todo.completed);
+        }else {
+          return this.todos.filter(todo => todo.completed);
+        }}
+    ));
+    // when you subscribe to the returned Observable, 
+    // you need to resubscribe to it every time the statusSelected value changes
+    // to get the updated filtered array.
   }
 
   deleteTodo(id: number): void {
     let deletedElements = this.todos.splice(this.todos.findIndex(a => a.id === id) , 1)
     this.deletedTodos.push(deletedElements[0]);
-    this.todosLength.next(this.todos.length);
+    this.todosLength$.next(this.todos.length);
+    this.statusSelected.next(this.statusSelected.getValue());
   }
 
 }
