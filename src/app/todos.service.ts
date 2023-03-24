@@ -12,7 +12,7 @@ export class TodosService {
       id: 1,
       todo: 'Do something nice for someone I care about',
       completed: true,
-      userId: 26,
+      userId: 48,
     },
     {
       id: 2,
@@ -132,7 +132,8 @@ export class TodosService {
 
   deletedTodos: Todo[] = [];
 
-  todosLength$: BehaviorSubject<number> = new BehaviorSubject<number>(this.todos.length);
+  LoggedUserId =  48;
+  todosLength$: BehaviorSubject<number> = new BehaviorSubject<number>(this.todos.filter(todo => todo.userId === this.LoggedUserId).length);
   
   constructor() { }
 
@@ -147,11 +148,11 @@ export class TodosService {
     return this.statusSelected.pipe(
       map(statusSelected => {
         if (statusSelected == 'all'){
-          return this.todos;
+          return this.todos.filter(todo => todo.userId === this.LoggedUserId);
         }else if(statusSelected == 'pending'){
-          return this.todos.filter(todo =>!todo.completed);
+          return this.todos.filter(todo =>!todo.completed && todo.userId === this.LoggedUserId);
         }else {
-          return this.todos.filter(todo => todo.completed);
+          return this.todos.filter(todo => todo.completed && todo.userId === this.LoggedUserId);
         }}
     ));
     // when you subscribe to the returned Observable, 
@@ -162,7 +163,7 @@ export class TodosService {
   deleteTodo(id: number): void {
     let deletedElements = this.todos.splice(this.todos.findIndex(a => a.id === id) , 1)
     this.deletedTodos.push(deletedElements[0]);
-    this.todosLength$.next(this.todos.length);
+    this.todosLength$.next(this.todos.filter(todo => todo.userId === this.LoggedUserId).length);
     this.statusSelected.next(this.statusSelected.getValue());
   }
 
