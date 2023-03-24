@@ -167,4 +167,12 @@ export class TodosService {
     this.statusSelected.next(this.statusSelected.getValue());
   }
 
+  newTodo(todo: Todo): void {
+    todo.id =  !this.todos.length ? 1 : this.todos[this.todos.length - 1].id + 1,
+    todo.userId = this.LoggedUserId;
+    this.todos.push(todo);
+    this.todosLength$.next(this.todos.filter(todo => todo.userId === this.LoggedUserId).length);
+    this.statusSelected.next(this.statusSelected.getValue());
+  }
+
 }

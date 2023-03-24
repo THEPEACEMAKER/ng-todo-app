@@ -16,15 +16,15 @@ export class TodoListComponent {
   constructor(private TodosService: TodosService) { }
 
   newTodo: string = '';
-  // setValue() {
-  //   this.todos.push({
-  //     id: !this.todos.length ? 1 : this.todos[this.todos.length - 1].id + 1,
-  //     todo: this.newTodo,
-  //     completed: false,
-  //     userId: 26,
-  //   });
-  //   this.newTodo = '';
-  // }
+  setValue() {
+    this.TodosService.newTodo({
+      id: 0,
+      todo: this.newTodo,
+      completed: false,
+      userId: 0,
+    });
+    this.newTodo = '';
+  }
 
   selectByStatus(status: string) {
     this.TodosService.selectByStatus(status);
