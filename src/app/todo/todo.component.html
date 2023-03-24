@@ -1,6 +1,6 @@
 <li class="task">
     <label for="0">
-        <input type="checkbox" id={{id}} [(ngModel)]="completed">
+        <input type="checkbox" id={{id}} [(ngModel)]="completed" (change)="toggleCompleted()">
         <p [ngClass]="{'checked': completed}">{{id}} - {{todo}}</p>
 
     </label>

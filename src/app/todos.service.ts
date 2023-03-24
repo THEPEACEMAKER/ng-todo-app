@@ -175,4 +175,11 @@ export class TodosService {
     this.statusSelected.next(this.statusSelected.getValue());
   }
 
+  toggleCompleted(todo: Todo): void {
+    const index = this.todos.findIndex(a => a.id === todo.id);
+    this.todos[index].completed = todo.completed;
+    // to update the UI instantly
+    this.statusSelected.next(this.statusSelected.getValue());
+  }
+
 }
