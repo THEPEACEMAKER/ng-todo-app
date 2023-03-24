@@ -5,11 +5,11 @@
     </div>
     <div class="controls">
         <div class="filters">
-            <span class="active" id="all" [ngClass]="{'active': statusSelected == 'all'}"
+            <span class="active" id="all" [ngClass]="{'active': (statusSelected$ | async) == 'all'}"
                 (click)="selectByStatus('all')">All</span>
-            <span id="pending" [ngClass]="{'active': statusSelected == 'pending'}"
+            <span id="pending" [ngClass]="{'active': (statusSelected$ | async) == 'pending'}"
                 (click)="selectByStatus('pending')">Pending</span>
-            <span id="completed" [ngClass]="{'active': statusSelected == 'completed'}"
+            <span id="completed" [ngClass]="{'active': (statusSelected$ | async) == 'completed'}"
                 (click)="selectByStatus('completed')">Completed</span>
         </div>
         <button type="button" class="clear-btn" (click)="clearAll()">Clear All</button>

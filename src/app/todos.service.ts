@@ -136,7 +136,7 @@ export class TodosService {
   
   constructor() { }
 
-  private statusSelected = new BehaviorSubject<string>('all');
+  statusSelected = new BehaviorSubject<string>('all');
 
   selectByStatus(status: string) {
     this.statusSelected.next(status);

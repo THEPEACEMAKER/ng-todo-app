@@ -12,6 +12,7 @@ export class TodoListComponent {
   title: string = 'todo-app';
   
   todos$: Observable<Todo[]> = this.TodosService.getSelectedTodos$();
+  statusSelected$: Observable<string> =this.TodosService.statusSelected;
   constructor(private TodosService: TodosService) { }
 
   newTodo: string = '';
@@ -25,7 +26,6 @@ export class TodoListComponent {
   //   this.newTodo = '';
   // }
 
-  statusSelected: string = 'all';
   selectByStatus(status: string) {
     this.TodosService.selectByStatus(status);
   }
