@@ -1,1 +1,37 @@
-<p>sign-in-form works!</p>
+<h1>Sign In</h1>
+<div class="row justify-content-sm-center">
+    <div class="col-sm-6">
+        <form [formGroup]="signForm" (ngSubmit)="handleSubmit()">
+            <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" placeholder="Provide your name" type="text" formControlName="name" />
+                <span class="text-danger" *ngIf="signForm.get('name')?.invalid && signForm.get('name')?.touched">
+                    Name is invalid
+                </span>
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input class="form-control" placeholder="Provide your email address" required type="email"
+                    formControlName="email" />
+                <span class="text-danger" *ngIf="signForm.get('email')?.invalid && signForm.get('email')?.touched">
+                    Email is invalid
+                </span>
+            </div>
+            <div class="form-group">
+                <label>Quote</label>
+                <input class="form-control" placeholder="Provide your quote" type="text" formControlName="quote" />
+                <span class="text-danger" *ngIf="signForm.get('quote')?.invalid && signForm.get('quote')?.touched">
+                    Quote is invalid
+                </span>
+            </div>
+            <div class="form-group">
+                <div style="display: flex; margin-top: 10px;">
+                    <button type="submit" class="btn btn-primary" style="margin-left: auto; width: 30%;"
+                        [disabled]="signForm.invalid">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
