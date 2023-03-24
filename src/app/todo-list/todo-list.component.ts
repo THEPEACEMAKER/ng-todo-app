@@ -40,7 +40,7 @@ export class TodoListComponent {
   }
 
   clearAll() {
-    // this.todos = [];
+    this.TodosService.clearAll();
   }
 
 }

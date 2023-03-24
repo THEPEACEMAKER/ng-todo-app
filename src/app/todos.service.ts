@@ -182,4 +182,16 @@ export class TodosService {
     this.statusSelected.next(this.statusSelected.getValue());
   }
 
+  clearAll(): void {
+    if (this.statusSelected.getValue() == 'all'){
+      this.todos = [];
+    }else if(this.statusSelected.getValue() == 'pending'){
+      this.todos = this.todos.filter(todo => todo.completed && todo.userId === this.LoggedUserId);
+    }else {
+      this.todos = this.todos.filter(todo => !todo.completed && todo.userId === this.LoggedUserId);
+    }
+    // to update the UI instantly
+    this.statusSelected.next(this.statusSelected.getValue());
+  }
+
 }
