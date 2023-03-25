@@ -13,9 +13,11 @@
                 (click)="selectByStatus('completed')">
                 <i class="bi bi-check2-all"></i>Completed ({{ (todosSummary$ | async)?.completed }}/{{ (todosSummary$ |
                 async)?.total }})</span>
-            <span id="favorite" [ngClass]="{'active': (statusSelected$ | async) == 'favorite'}">
+            <span id="favorite" [ngClass]="{'active': (statusSelected$ | async) == 'favorite'}"
+                (click)="selectByStatus('favorite')">
                 <i class="bi bi-heart"></i>Favorite ({{ (todosSummary$ | async)?.favorite }})</span>
-            <span id="deleted" [ngClass]="{'active': (statusSelected$ | async) == 'deleted'}">
+            <span id="deleted" [ngClass]="{'active': (statusSelected$ | async) == 'deleted'}"
+                (click)="selectByStatus('deleted')">
                 <i class="bi bi-trash"></i>Deleted ({{ (todosSummary$ | async)?.deleted }})</span>
         </div>
         <button type="button" class="clear-btn" (click)="clearAll()">Clear All</button>
