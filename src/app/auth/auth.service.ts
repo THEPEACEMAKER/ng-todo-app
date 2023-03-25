@@ -39,5 +39,16 @@ export class AuthService {
     this.isLoggedIn$.next(true);
     this.router.navigate(['']);
   }
+
+  login(name: string, email: string): void {
+    const user: User|undefined = this.users.find(a => a.name === name && a.email === email);
+    if (user) {
+      this.LoggedUser = user;
+      this.isLoggedIn$.next(true);
+      this.router.navigate(['']);
+    }else{
+      console.log("User not found");
+    }
+  }
   
 }

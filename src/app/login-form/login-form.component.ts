@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../auth/auth.service'
 
 @Component({
   selector: 'app-login-form',
@@ -8,8 +9,10 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginFormComponent {
 
+  constructor(private AuthService: AuthService) { }
+
   handleFormSubmit(form: NgForm): void {
-    // value will print the JavaScript Object of the Form Values.
-    console.log(form.value);
-     }
+    this.AuthService.login(form.value.name, form.value.email);
+  }
+
 }

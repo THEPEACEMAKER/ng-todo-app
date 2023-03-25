@@ -13,10 +13,10 @@
 
             <div class="form-group">
                 <label>Email Address</label>
-                <input class="form-control" placeholder="Provide your email address" ngModel name="emailAddress"
-                    required type="email" />
+                <input class="form-control" placeholder="Provide your email address" ngModel name="email" required
+                    type="email" />
                 <span class="text-danger"
-                    *ngIf="templateDrivenForm.controls['emailAddress']?.invalid && templateDrivenForm.controls['emailAddress'].dirty">
+                    *ngIf="templateDrivenForm.controls['email']?.invalid && templateDrivenForm.controls['email'].dirty">
                     Email is required
                 </span>
             </div>
