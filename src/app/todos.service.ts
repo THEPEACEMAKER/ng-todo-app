@@ -155,9 +155,14 @@ export class TodosService {
           return this.todos.filter(todo => todo.userId === this.LoggedUserId);
         }else if(statusSelected == 'pending'){
           return this.todos.filter(todo =>!todo.completed && todo.userId === this.LoggedUserId);
-        }else {
+        }else if(statusSelected == 'completed'){
           return this.todos.filter(todo => todo.completed && todo.userId === this.LoggedUserId);
-        }}
+        }else if(statusSelected == 'favorite'){
+          return this.todos.filter(todo => todo.favorite && todo.userId === this.LoggedUserId);
+        }else {
+          return this.deletedTodos.filter(todo => todo.userId === this.LoggedUserId);
+        }
+      }
     ));
     // when you subscribe to the returned Observable, 
     // you need to resubscribe to it every time the statusSelected value changes
@@ -172,7 +177,7 @@ export class TodosService {
           total: this.todos.filter(todo => todo.userId === this.LoggedUserId).length,
           pending: this.todos.filter(todo => !todo.completed && todo.userId === this.LoggedUserId).length,
           completed: this.todos.filter(todo => todo.completed && todo.userId === this.LoggedUserId).length,
-          favorite: 0,
+          favorite: this.todos.filter(todo => todo.favorite && todo.userId === this.LoggedUserId).length,
           deleted: this.deletedTodos.filter(todo => todo.userId === this.LoggedUserId).length,
         }
         }
@@ -182,6 +187,14 @@ export class TodosService {
   deleteTodo(id: number): void {
     let deletedElements = this.todos.splice(this.todos.findIndex(a => a.id === id) , 1)
     this.deletedTodos.push(deletedElements[0]);
+    this.statusSelected.next(this.statusSelected.getValue());
+  }
+
+  loveTodo(id: number): void {
+    const todo = this.todos.find(a => a.id === id);
+    if (todo) {
+      todo.favorite = !todo.favorite;
+    }
     this.statusSelected.next(this.statusSelected.getValue());
   }
 

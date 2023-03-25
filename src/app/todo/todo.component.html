@@ -5,6 +5,7 @@
 
     </label>
     <div class="settings">
+        <i class="bi" [ngClass]="favorite ? 'bi-heart-fill' : 'bi-heart'" (click)="loveTodo()"></i>
         <i class="bi bi-trash" (click)="deleteTodo()"></i>
         <i class="bi bi-info-circle" routerLink="/todos/{{id}}/{{todo}}/{{completed}}"></i>
     </div>

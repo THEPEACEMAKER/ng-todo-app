@@ -126,12 +126,20 @@ i.bi-trash:hover {
     color: red;
 }
 
-i.bi-info-circle {
+i {
     margin-left: 5px;
 }
 
 i.bi-info-circle:hover {
     color: #0077c2;
+}
+
+i.bi-heart:hover {
+    color: orange;
+}
+
+i.bi-heart-fill {
+    color: #f8b574;
 }
 
 @media (max-width: 400px) {

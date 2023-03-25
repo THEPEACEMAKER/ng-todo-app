@@ -22,7 +22,7 @@
     </div>
     <ul class="task-box">
         <app-todo class="task" *ngFor="let todo of todos$ | async" [id]=todo.id [todo]="todo.todo"
-            [completed]="todo.completed" (toggleEvent)="toggleCompleted($event)"
-            (deleteEvent)="deleteTodo($event)"></app-todo>
+            [favorite]="todo.favorite" [completed]="todo.completed" (toggleEvent)="toggleCompleted($event)"
+            (deleteEvent)="deleteTodo($event)" (loveEvent)="loveTodo($event)"></app-todo>
     </ul>
 </div>

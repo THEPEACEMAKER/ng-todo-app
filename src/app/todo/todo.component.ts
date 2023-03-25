@@ -15,14 +15,21 @@ export class TodoComponent {
   completed!: boolean;
   @Input()
   userId!: number;
+  @Input()
+  favorite!: boolean | undefined;
   
   @Output() deleteEvent = new EventEmitter<number>();
   @Output() toggleEvent = new EventEmitter<Todo>();
+  @Output() loveEvent = new EventEmitter<number>();
   
   constructor() { }
 
   deleteTodo() {
     this.deleteEvent.emit(this.id)
+  }
+
+  loveTodo() {
+    this.loveEvent.emit(this.id)
   }
 
   toggleCompleted() {

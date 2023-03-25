@@ -47,6 +47,10 @@ export class TodoListComponent {
     this.TodosService.deleteTodo(id);
   }
 
+  loveTodo(id: number):void {
+    this.TodosService.loveTodo(id);
+  }
+
   toggleCompleted(todo: Todo):void {
     // Call the service method to update the original todos array
     this.TodosService.toggleCompleted(todo);
