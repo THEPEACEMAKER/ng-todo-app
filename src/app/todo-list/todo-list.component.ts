@@ -51,6 +51,7 @@ export class TodoListComponent {
   }
 
   loveTodo(id: number):void {
+    console.log(id);
     this.TodosService.loveTodo(id);
   }
 

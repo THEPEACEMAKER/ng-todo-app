@@ -18,4 +18,18 @@ export class TodoDetailsComponent implements OnInit{
     this.todo = this.TodosService.getTodo(id);
   }
 
+  deleteTodo(id: number):void {
+    this.TodosService.deleteTodo(id);
+  }
+
+  loveTodo(id: number):void {
+    console.log(id);
+    this.TodosService.loveTodo(id);
+  }
+
+  toggleCompleted(todo: Todo):void {
+    // Call the service method to update the original todos array
+    this.TodosService.toggleCompleted(todo);
+  }
+
 }
