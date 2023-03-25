@@ -17,13 +17,13 @@ export class AuthService {
   ];
 
 
-  isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  LoggedUser: User = {
+  isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  LoggedUser$: BehaviorSubject<User> = new BehaviorSubject<User>({
     id: 48,
     name: "Adel",
     email: "Adel@mail.com",
     quote: "just do it",
-  };
+  });
 
   constructor(private router: Router) { }
 
@@ -35,7 +35,7 @@ export class AuthService {
     const newId = !this.users.length ? 1 : this.users[this.users.length - 1].id + 1;
     user.id =  newId,
     this.users.push(user);
-    this.LoggedUser = user;
+    this.LoggedUser$.next(user);
     this.isLoggedIn$.next(true);
     this.router.navigate(['']);
   }
@@ -43,7 +43,7 @@ export class AuthService {
   login(name: string, email: string): void {
     const user: User|undefined = this.users.find(a => a.name === name && a.email === email);
     if (user) {
-      this.LoggedUser = user;
+      this.LoggedUser$.next(user);
       this.isLoggedIn$.next(true);
       this.router.navigate(['']);
     }else{

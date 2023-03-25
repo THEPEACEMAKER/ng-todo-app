@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Todo } from './Todo';
+import { User } from './auth/user';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AuthService } from './auth/auth.service'
 
 @Injectable({
   providedIn: 'root'
@@ -132,10 +134,12 @@ export class TodosService {
 
   deletedTodos: Todo[] = [];
 
-  LoggedUserId =  48;
+  LoggedUserId!: number;
   todosLength$: BehaviorSubject<number> = new BehaviorSubject<number>(this.todos.filter(todo => todo.userId === this.LoggedUserId).length);
   
-  constructor() { }
+  constructor(private AuthService: AuthService) {
+    this.AuthService.LoggedUser$.subscribe(user => this.LoggedUserId = user.id);
+  }
 
   statusSelected = new BehaviorSubject<string>('all');
 

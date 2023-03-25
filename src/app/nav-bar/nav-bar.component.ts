@@ -3,7 +3,6 @@ import { TodosService } from '../todos.service'
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service'
 
-
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
@@ -11,6 +10,7 @@ import { AuthService } from '../auth/auth.service'
 })
 export class NavBarComponent {
   todosNum:number=0;
+  
   Length$:Observable<number> =this.TodosService.todosLength$;
 
   constructor(private TodosService: TodosService, private AuthService: AuthService) { }

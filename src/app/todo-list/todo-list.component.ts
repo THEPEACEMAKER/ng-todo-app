@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Todo } from './Todo';
 import { TodosService } from '../todos.service'
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { AuthService } from '../auth/auth.service'
 
 @Component({
   selector: 'app-todo-list',
@@ -10,10 +11,20 @@ import { Observable } from 'rxjs';
 })
 export class TodoListComponent {
   title: string = 'todo-app';
-  
+  subscription!: Subscription;
+  name!:string;
+
   todos$: Observable<Todo[]> = this.TodosService.getSelectedTodos$();
   statusSelected$: Observable<string> =this.TodosService.statusSelected;
-  constructor(private TodosService: TodosService) { }
+  constructor(private TodosService: TodosService, private AuthService: AuthService) { }
+    
+  ngOnInit(): void {
+		this.subscription = this.AuthService.LoggedUser$.subscribe(user => this.name = user.name);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   newTodo: string = '';
   setValue() {
