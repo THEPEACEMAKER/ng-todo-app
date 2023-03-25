@@ -50,5 +50,10 @@ export class AuthService {
       console.log("User not found");
     }
   }
+
+  logout(): void {
+    this.isLoggedIn$.next(false);
+    this.router.navigate(['signin']);
+  }
   
 }

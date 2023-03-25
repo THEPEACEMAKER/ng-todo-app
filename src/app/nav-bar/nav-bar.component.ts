@@ -13,4 +13,8 @@ export class NavBarComponent {
 
   constructor(private TodosService: TodosService, private AuthService: AuthService) { }
   isLoggedIn: BehaviorSubject<boolean> = this.AuthService.isAuthenticated$();
+
+  logout(){
+    this.AuthService.logout();
+  }
 }

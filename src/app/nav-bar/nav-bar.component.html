@@ -12,7 +12,8 @@
             </button>
             <button type="button" class="btn btn-primary" *ngIf="!isLoggedIn.getValue()" routerLink="/signin">Sign
                 Up</button>
-            <button type="button" class="btn btn-primary" *ngIf="isLoggedIn.getValue()">Log out</button>
+            <button type="button" class="btn btn-primary" *ngIf="isLoggedIn.getValue()" (click)="logout()">Log
+                out</button>
         </div>
     </div>
 </nav>
