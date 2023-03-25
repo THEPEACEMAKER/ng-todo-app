@@ -17,11 +17,10 @@ import { SignInFormComponent } from './sign-in-form/sign-in-form.component';
 import { LoginFormComponent } from './login-form/login-form.component'
 
 const routes: Routes = [
-  {path:'', component: TodoListComponent},
-  {path:'todos/:id/:todo/:completed', component: TodoDetailsComponent},
+  {path:'', component: TodoListComponent, canActivate:[AuthGuard]},
+  {path:'todos/:id/:todo/:completed', component: TodoDetailsComponent, canActivate:[AuthGuard]},
   {path:'signin', component: SignInFormComponent},
   {path:'login', component: LoginFormComponent},
-  // {path:'theUserTodos', component: TodoDetailsComponent ,canActivate:[AuthGuard]},
   {path:'**', component: Page404Component}
 ];
 @NgModule({

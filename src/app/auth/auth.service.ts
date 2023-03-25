@@ -1,12 +1,43 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from './user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  isLoggedIn = false;
-  constructor() { }
-  isAuthenticated(){
-    return this.isLoggedIn;
+  users: User[] = [
+    {
+    id: 48,
+    name: "Adel",
+    email: "Adel@mail.com",
+    quote: "just do it",
+    },
+  ];
+
+
+  isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  LoggedUser: User = {
+    id: 48,
+    name: "Adel",
+    email: "Adel@mail.com",
+    quote: "just do it",
+  };
+
+  constructor(private router: Router) { }
+
+  isAuthenticated$(): BehaviorSubject<boolean>{
+    return this.isLoggedIn$;
   }
+
+  newUser(user: User): void {
+    const newId = !this.users.length ? 1 : this.users[this.users.length - 1].id + 1;
+    user.id =  newId,
+    this.users.push(user);
+    this.LoggedUser = user;
+    this.isLoggedIn$.next(true);
+    this.router.navigate(['']);
+  }
+  
 }

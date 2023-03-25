@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { TodosService } from '../todos.service'
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthService } from '../auth/auth.service'
+
 
 @Component({
   selector: 'app-nav-bar',
@@ -11,6 +13,6 @@ export class NavBarComponent {
   todosNum:number=0;
   Length$:Observable<number> =this.TodosService.todosLength$;
 
-  constructor(private TodosService: TodosService) { }
-
+  constructor(private TodosService: TodosService, private AuthService: AuthService) { }
+  isLoggedIn: BehaviorSubject<boolean> = this.AuthService.isAuthenticated$();
 }
