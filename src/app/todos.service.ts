@@ -224,4 +224,8 @@ export class TodosService {
     this.statusSelected.next(this.statusSelected.getValue());
   }
 
+  getTodo(id:number): Todo | undefined {
+    return this.todos.find(a => a.id === Number(id));
+  }
+
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TodosService } from '../todos.service'
+import { Todo } from '../Todo';
 
 @Component({
   selector: 'app-todo-details',
@@ -7,16 +9,13 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./todo-details.component.css']
 })
 export class TodoDetailsComponent implements OnInit{  
-  todo!: { id:number; todo: string;completed: boolean}
+  todo!: Todo | undefined;
 
-  constructor(private _activateRoute: ActivatedRoute) { }
+  constructor(private TodosService: TodosService, private _activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.todo = {
-      id: this._activateRoute.snapshot.params['id'],
-      todo: this._activateRoute.snapshot.params['todo'],
-      completed: this._activateRoute.snapshot.params['completed']
-    }
+    const id: number = this._activateRoute.snapshot.params['id'];
+    this.todo = this.TodosService.getTodo(id);
   }
 
 }

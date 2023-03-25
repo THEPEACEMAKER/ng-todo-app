@@ -1,3 +1,6 @@
-<div>
-    <p>{{todo.id}} - {{todo.todo}} status: {{todo.completed}}</p>
+<div class="wrapper">
+    <ul class="task-box">
+        <app-todo class="task" *ngIf="todo" [id]="todo.id" [todo]="todo.todo" [favorite]="todo.favorite"
+            [completed]="todo.completed"></app-todo>
+    </ul>
 </div>
