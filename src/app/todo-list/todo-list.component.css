@@ -82,6 +82,10 @@ li {
     color: #f12711;
 }
 
+.filters span i {
+    margin-right: 3px;
+}
+
 .clear-btn {
     border: none;
     opacity: 0.6;

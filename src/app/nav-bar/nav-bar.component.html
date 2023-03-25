@@ -1,14 +1,19 @@
-<ul class="nav justify-content-center">
-    <li class="nav-item">
-        <a class="nav-link " aria-current="page" routerLink="/">Home</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" routerLink="/login" *ngIf="!isLoggedIn.getValue()" routerLinkActive='active'>login</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" routerLink="/signin" *ngIf="!isLoggedIn.getValue()" routerLinkActive='active'>sign in</a>
-    </li>
-    <li class="nav-item">
-        <p>todos number {{Length$ | async}}</p>
-    </li>
-</ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Todos</a>
+        <div class="navbar-nav ml-auto">
+            <a class="nav-link disabled" *ngIf="!isLoggedIn.getValue()">Welcome to Todos</a>
+            <a class="nav-link disabled" *ngIf="isLoggedIn.getValue()">Welcome Adel</a>
+            <a class="nav-link user-img" href="#" *ngIf="isLoggedIn.getValue()">
+                <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="img-fluid rounded-circle"
+                    alt="User Image">
+            </a>
+            <button type="button" class="btn btn-link px-3 me-2" *ngIf="!isLoggedIn.getValue()" routerLink="/login">
+                Login
+            </button>
+            <button type="button" class="btn btn-primary" *ngIf="!isLoggedIn.getValue()" routerLink="/signin">Sign
+                Up</button>
+            <button type="button" class="btn btn-primary" *ngIf="isLoggedIn.getValue()">Log out</button>
+        </div>
+    </div>
+</nav>

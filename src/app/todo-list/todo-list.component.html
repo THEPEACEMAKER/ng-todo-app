@@ -10,7 +10,12 @@
             <span id="pending" [ngClass]="{'active': (statusSelected$ | async) == 'pending'}"
                 (click)="selectByStatus('pending')">Pending</span>
             <span id="completed" [ngClass]="{'active': (statusSelected$ | async) == 'completed'}"
-                (click)="selectByStatus('completed')">Completed</span>
+                (click)="selectByStatus('completed')">
+                <i class="bi bi-check2-all"></i>Completed 5/10</span>
+            <span id="favorite" [ngClass]="{'active': (statusSelected$ | async) == 'favorite'}">
+                <i class="bi bi-heart"></i>Favorite</span>
+            <span id="deleted" [ngClass]="{'active': (statusSelected$ | async) == 'deleted'}">
+                <i class="bi bi-trash"></i>Deleted</span>
         </div>
         <button type="button" class="clear-btn" (click)="clearAll()">Clear All</button>
     </div>

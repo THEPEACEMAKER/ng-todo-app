@@ -1,0 +1,62 @@
+.navbar {
+    border-bottom: 2px solid #f8b574;
+    padding: 10px 50px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.nav-link {
+    margin-right: 10px;
+    color: #333;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center
+}
+
+.nav-link:hover {
+    color: #0066cc;
+}
+
+.navbar-nav .nav-link i {
+    margin-right: 5px;
+    font-size: 1.2rem;
+}
+
+.navbar-nav .nav-link .icon-label {
+    font-size: 0.8rem;
+    background-color: #333;
+    color: #fff;
+    padding: 0px 5px;
+    border-radius: 10px;
+    position: relative;
+    top: -3px;
+    margin-left: 3px;
+}
+
+.user-img img {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.user-img img:hover {
+    border-color: #0066cc;
+    box-shadow: 0 0 5px #0066cc;
+}
+
+.btn-primary {
+    background-color: #0066cc;
+    border-color: #0066cc;
+}
+
+.btn-primary:hover {
+    background-color: #0059b3;
+    border-color: #0052cc;
+}
+
+.btn-link {
+    text-decoration: none;
+}
