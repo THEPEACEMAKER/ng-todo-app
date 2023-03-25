@@ -10,8 +10,6 @@ import { AuthService } from '../auth/auth.service'
 })
 export class NavBarComponent {
   todosNum:number=0;
-  
-  Length$:Observable<number> =this.TodosService.todosLength$;
 
   constructor(private TodosService: TodosService, private AuthService: AuthService) { }
   isLoggedIn: BehaviorSubject<boolean> = this.AuthService.isAuthenticated$();

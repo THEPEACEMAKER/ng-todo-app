@@ -3,6 +3,7 @@ import { Todo } from './Todo';
 import { TodosService } from '../todos.service'
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service'
+import { TodosSummary } from '../todos-summary';
 
 @Component({
   selector: 'app-todo-list',
@@ -15,6 +16,7 @@ export class TodoListComponent {
   name!:string;
 
   todos$: Observable<Todo[]> = this.TodosService.getSelectedTodos$();
+  todosSummary$: Observable<TodosSummary> = this.TodosService.getTodosSummary$();
   statusSelected$: Observable<string> =this.TodosService.statusSelected;
   constructor(private TodosService: TodosService, private AuthService: AuthService) { }
     

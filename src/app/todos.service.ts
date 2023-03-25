@@ -4,6 +4,7 @@ import { User } from './auth/user';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from './auth/auth.service'
+import { TodosSummary } from './todos-summary';
 
 @Injectable({
   providedIn: 'root'
@@ -135,7 +136,6 @@ export class TodosService {
   deletedTodos: Todo[] = [];
 
   LoggedUserId!: number;
-  todosLength$: BehaviorSubject<number> = new BehaviorSubject<number>(this.todos.filter(todo => todo.userId === this.LoggedUserId).length);
   
   constructor(private AuthService: AuthService) {
     this.AuthService.LoggedUser$.subscribe(user => this.LoggedUserId = user.id);
@@ -164,10 +164,24 @@ export class TodosService {
     // to get the updated filtered array.
   }
 
+  getTodosSummary$(): Observable<TodosSummary>{
+    // returns a new Observable every time the statusSelected value changes.
+    return this.statusSelected.pipe(
+      map(statusSelected => {
+        return {
+          total: this.todos.filter(todo => todo.userId === this.LoggedUserId).length,
+          pending: this.todos.filter(todo => !todo.completed && todo.userId === this.LoggedUserId).length,
+          completed: this.todos.filter(todo => todo.completed && todo.userId === this.LoggedUserId).length,
+          favorite: 0,
+          deleted: this.deletedTodos.filter(todo => todo.userId === this.LoggedUserId).length,
+        }
+        }
+    ));
+  }
+
   deleteTodo(id: number): void {
     let deletedElements = this.todos.splice(this.todos.findIndex(a => a.id === id) , 1)
     this.deletedTodos.push(deletedElements[0]);
-    this.todosLength$.next(this.todos.filter(todo => todo.userId === this.LoggedUserId).length);
     this.statusSelected.next(this.statusSelected.getValue());
   }
 
@@ -175,7 +189,6 @@ export class TodosService {
     todo.id =  !this.todos.length ? 1 : this.todos[this.todos.length - 1].id + 1,
     todo.userId = this.LoggedUserId;
     this.todos.push(todo);
-    this.todosLength$.next(this.todos.filter(todo => todo.userId === this.LoggedUserId).length);
     this.statusSelected.next(this.statusSelected.getValue());
   }
 

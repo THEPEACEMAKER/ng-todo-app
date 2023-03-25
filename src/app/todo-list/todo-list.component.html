@@ -6,16 +6,17 @@
     <div class="controls">
         <div class="filters">
             <span class="active" id="all" [ngClass]="{'active': (statusSelected$ | async) == 'all'}"
-                (click)="selectByStatus('all')">All</span>
+                (click)="selectByStatus('all')">All ({{ (todosSummary$ | async)?.total }})</span>
             <span id="pending" [ngClass]="{'active': (statusSelected$ | async) == 'pending'}"
-                (click)="selectByStatus('pending')">Pending</span>
+                (click)="selectByStatus('pending')">Pending ({{ (todosSummary$ | async)?.pending }})</span>
             <span id="completed" [ngClass]="{'active': (statusSelected$ | async) == 'completed'}"
                 (click)="selectByStatus('completed')">
-                <i class="bi bi-check2-all"></i>Completed 5/10</span>
+                <i class="bi bi-check2-all"></i>Completed ({{ (todosSummary$ | async)?.completed }}/{{ (todosSummary$ |
+                async)?.total }})</span>
             <span id="favorite" [ngClass]="{'active': (statusSelected$ | async) == 'favorite'}">
-                <i class="bi bi-heart"></i>Favorite</span>
+                <i class="bi bi-heart"></i>Favorite ({{ (todosSummary$ | async)?.favorite }})</span>
             <span id="deleted" [ngClass]="{'active': (statusSelected$ | async) == 'deleted'}">
-                <i class="bi bi-trash"></i>Deleted</span>
+                <i class="bi bi-trash"></i>Deleted ({{ (todosSummary$ | async)?.deleted }})</span>
         </div>
         <button type="button" class="clear-btn" (click)="clearAll()">Clear All</button>
     </div>
