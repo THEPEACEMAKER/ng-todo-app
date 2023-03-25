@@ -14,6 +14,7 @@ export class TodoListComponent {
   title: string = 'todo-app';
   subscription!: Subscription;
   name!:string;
+  quote!:string;
 
   todos$: Observable<Todo[]> = this.TodosService.getSelectedTodos$();
   todosSummary$: Observable<TodosSummary> = this.TodosService.getTodosSummary$();
@@ -21,7 +22,9 @@ export class TodoListComponent {
   constructor(private TodosService: TodosService, private AuthService: AuthService) { }
     
   ngOnInit(): void {
-		this.subscription = this.AuthService.LoggedUser$.subscribe(user => this.name = user.name);
+		this.subscription = this.AuthService.LoggedUser$.subscribe(user => {
+      this.name = user.name; this.quote = user.quote;
+    });
   }
 
   ngOnDestroy() {
