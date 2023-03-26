@@ -14,11 +14,13 @@ import { AuthService } from './auth/auth.service'
 import { AuthGuard } from './auth/auth.guard'
 import { TodosService } from './todos.service';
 import { SignInFormComponent } from './sign-in-form/sign-in-form.component';
-import { LoginFormComponent } from './login-form/login-form.component'
+import { LoginFormComponent } from './login-form/login-form.component';
+import { UserDetailsComponent } from './user-details/user-details.component'
 
 const routes: Routes = [
   {path:'', component: TodoListComponent, canActivate:[AuthGuard]},
   {path:'todos/:id', component: TodoDetailsComponent, canActivate:[AuthGuard]},
+  {path:'profile', component: UserDetailsComponent, canActivate:[AuthGuard]},
   {path:'signin', component: SignInFormComponent},
   {path:'login', component: LoginFormComponent},
   {path:'**', component: Page404Component}
@@ -33,7 +35,8 @@ const routes: Routes = [
     Page404Component,
     TodoDetailsComponent,
     SignInFormComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule,
