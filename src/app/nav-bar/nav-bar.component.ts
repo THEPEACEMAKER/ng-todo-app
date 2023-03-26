@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TodosService } from '../todos.service'
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service'
+import { User } from '../auth/user';
 
 @Component({
   selector: 'app-nav-bar',
@@ -9,7 +10,7 @@ import { AuthService } from '../auth/auth.service'
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent {
-  todosNum:number=0;
+  user:BehaviorSubject<User> = this.AuthService.LoggedUser$;
 
   constructor(private TodosService: TodosService, private AuthService: AuthService) { }
   isLoggedIn: BehaviorSubject<boolean> = this.AuthService.isAuthenticated$();
