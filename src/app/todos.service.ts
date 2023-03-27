@@ -10,6 +10,9 @@ import { TodosSummary } from './todos-summary';
   providedIn: 'root'
 })
 export class TodosService {
+  private readonly TODOS_STORAGE_KEY = 'todos_list';
+  private readonly DELETED_TODOS_STORAGE_KEY = 'todos_deleted_list';
+
   todos: Todo[] = [
     {
       id: 1,
@@ -132,13 +135,33 @@ export class TodosService {
     { id: 29, todo: 'Make own LEGO creation', completed: false, userId: 30 },
     { id: 30, todo: 'Take cat on a walk', completed: false, userId: 15 },
   ];
-
   deletedTodos: Todo[] = [];
 
   LoggedUserId!: number | undefined;
   
   constructor(private AuthService: AuthService) {
-    this.AuthService.LoggedUser$.subscribe(user => this.LoggedUserId = user?.id);
+    this.AuthService.LoggedUser$.subscribe(user => {
+      this.LoggedUserId = user?.id
+      this.loadTodos();
+    });
+  }
+
+  private saveTodos(): void {
+    localStorage.setItem(this.TODOS_STORAGE_KEY, JSON.stringify(this.todos));
+    localStorage.setItem(this.DELETED_TODOS_STORAGE_KEY, JSON.stringify(this.deletedTodos));
+  }
+
+  private loadTodos(): void {
+    const storedTodos = localStorage.getItem(this.TODOS_STORAGE_KEY);
+    const storedDeletedTodos = localStorage.getItem(this.DELETED_TODOS_STORAGE_KEY);
+    if (storedTodos) {
+      this.todos = JSON.parse(storedTodos);
+    }else {
+      this.saveTodos();
+    }
+    if (storedDeletedTodos) {
+      this.deletedTodos = JSON.parse(storedDeletedTodos);
+    }
   }
 
   statusSelected = new BehaviorSubject<string>('all');
@@ -185,17 +208,22 @@ export class TodosService {
   }
 
   deleteTodo(id: number): void {
-    let deletedElements = this.todos.splice(this.todos.findIndex(a => a.id === id) , 1)
-    this.deletedTodos.push(deletedElements[0]);
-    this.statusSelected.next(this.statusSelected.getValue());
+    const index = this.todos.findIndex(todo => todo.id === id);
+    if (index !== -1) {
+      const deletedTodo = this.todos.splice(index, 1)[0];
+      this.deletedTodos.push(deletedTodo);
+      this.saveTodos();
+      this.statusSelected.next(this.statusSelected.getValue());
+    }
   }
 
   loveTodo(id: number): void {
     const todo = this.todos.find(a => a.id === id);
     if (todo) {
       todo.favorite = !todo.favorite;
+      this.saveTodos();
+      this.statusSelected.next(this.statusSelected.getValue());
     }
-    this.statusSelected.next(this.statusSelected.getValue());
   }
 
   newTodo(todo: Todo): void {
@@ -204,25 +232,34 @@ export class TodosService {
       todo.userId = this.LoggedUserId;
     }
     this.todos.push(todo);
+    this.saveTodos();
     this.statusSelected.next(this.statusSelected.getValue());
   }
 
   toggleCompleted(todo: Todo): void {
     const index = this.todos.findIndex(a => a.id === todo.id);
-    this.todos[index].completed = todo.completed;
-    // to update the UI instantly
-    this.statusSelected.next(this.statusSelected.getValue());
+    if (index!== -1) {
+      this.todos[index].completed = !this.todos[index].completed;
+      this.saveTodos();
+      console.log("toggle", todo.id)
+      this.statusSelected.next(this.statusSelected.getValue());
+    }
   }
 
   clearAll(): void {
     if (this.statusSelected.getValue() == 'all'){
       this.todos = [];
     }else if(this.statusSelected.getValue() == 'pending'){
-      this.todos = this.todos.filter(todo => todo.completed && todo.userId === this.LoggedUserId);
-    }else {
       this.todos = this.todos.filter(todo => !todo.completed && todo.userId === this.LoggedUserId);
+    }else if(this.statusSelected.getValue() == 'completed') {
+      this.todos = this.todos.filter(todo => todo.completed && todo.userId === this.LoggedUserId);
+    }else if(this.statusSelected.getValue() == 'favorite') {
+      this.todos = this.todos.filter(todo => todo.favorite && todo.userId === this.LoggedUserId);
+    }else {
+      this.deletedTodos = [];
     }
-    // to update the UI instantly
+
+    this.saveTodos();
     this.statusSelected.next(this.statusSelected.getValue());
   }
 
