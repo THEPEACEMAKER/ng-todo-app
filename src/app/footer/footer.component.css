@@ -5,7 +5,7 @@ footer {
     padding: 10px;
 
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     border-radius: 5px;
@@ -25,4 +25,30 @@ footer a {
     color: black;
     font-family: Futura;
     text-shadow: rgba(245, 245, 245, 0.5) 3px 5px 1px;
+}
+
+.social {
+    display: flex;
+    margin-left: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.social a {
+    text-decoration: none;
+    margin: 0 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.social a:hover {
+    opacity: 1;
+}
+
+.social a i {
+    font-size: 1.5rem;
 }
