@@ -16,6 +16,7 @@ import { TodosService } from './todos.service';
 import { SignInFormComponent } from './sign-in-form/sign-in-form.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { UserDetailsComponent } from './user-details/user-details.component'
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   {path:'', component: TodoListComponent, canActivate:[AuthGuard]},
@@ -42,7 +43,8 @@ const routes: Routes = [
     BrowserModule,
     FormsModule,
     RouterModule.forRoot(routes),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [AuthService, AuthGuard, TodosService],
   bootstrap: [AppComponent]
