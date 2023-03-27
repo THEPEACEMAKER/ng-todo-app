@@ -1,12 +1,14 @@
 <li class="task">
     <label for="0">
-        <input type="checkbox" id={{id}} [(ngModel)]="completed" (change)="toggleCompleted()">
+        <input type="checkbox" id={{id}} [(ngModel)]="completed" (change)="toggleCompleted()"
+            *ngIf="(statusSelected$ | async) != 'deleted'">
         <p [ngClass]="{'checked': completed}">{{id}} - {{todo}}</p>
 
     </label>
     <div class="settings">
-        <i class="bi" [ngClass]="favorite ? 'bi-heart-fill' : 'bi-heart'" (click)="loveTodo()"></i>
-        <i class="bi bi-trash" (click)="deleteTodo()"></i>
-        <i class="bi bi-info-circle" routerLink="/todos/{{id}}"></i>
+        <i class="bi" [ngClass]="favorite ? 'bi-heart-fill' : 'bi-heart'" (click)="loveTodo()"
+            *ngIf="(statusSelected$ | async) != 'deleted'"></i>
+        <i class="bi bi-trash" (click)="deleteTodo()" *ngIf="(statusSelected$ | async) != 'deleted'"></i>
+        <i class="bi bi-info-circle" routerLink="/todos/{{id}}" *ngIf="(statusSelected$ | async) != 'deleted'"></i>
     </div>
 </li>

@@ -1,5 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Todo } from '../Todo';
+import { TodosService } from '../todos.service'
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-todo',
@@ -22,7 +25,8 @@ export class TodoComponent {
   @Output() toggleEvent = new EventEmitter<Todo>();
   @Output() loveEvent = new EventEmitter<number>();
   
-  constructor() { }
+  statusSelected$: Observable<string> =this.TodosService.statusSelected;
+  constructor(private TodosService: TodosService) { }
 
   deleteTodo() {
     this.deleteEvent.emit(this.id)
