@@ -7,37 +7,45 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  users: User[] = [
-    {
-    id: 48,
-    name: "Adel",
-    email: "Adel@mail.com",
-    quote: "just do it",
-    },
-  ];
+  private readonly USERS_STORAGE_KEY = 'users';
+  private readonly LOGGED_USER_KEY = 'loggedUser';
 
+  users: User[] = [];
+  isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  LoggedUser$: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
 
-  isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  LoggedUser$: BehaviorSubject<User> = new BehaviorSubject<User>({
-    id: 48,
-    name: "Adel",
-    email: "Adel@mail.com",
-    quote: "just do it",
-  });
+  constructor(private router: Router) {
+    const storedUsers = localStorage.getItem(this.USERS_STORAGE_KEY);
+    if (storedUsers) {
+      this.users = JSON.parse(storedUsers);
+    }
 
-  constructor(private router: Router) { }
+    const storedUser = localStorage.getItem(this.LOGGED_USER_KEY);
+    if (storedUser) {
+      this.LoggedUser$.next(JSON.parse(storedUser));
+      this.isLoggedIn$.next(true);
+    }
+  }
 
   isAuthenticated$(): BehaviorSubject<boolean>{
     return this.isLoggedIn$;
   }
 
   newUser(user: User): void {
-    const newId = !this.users.length ? 1 : this.users[this.users.length - 1].id + 1;
-    user.id =  newId,
-    this.users.push(user);
-    this.LoggedUser$.next(user);
-    this.isLoggedIn$.next(true);
-    this.router.navigate(['']);
+    const userExist: User|undefined = this.users.find(a => a.email === user.email);
+    if(!userExist) {
+      const newId = !this.users.length ? 1 : Math.max(...this.users.map(u => u.id)) + 1;
+      user.id =  newId,
+      this.users.push(user);
+      localStorage.setItem(this.USERS_STORAGE_KEY, JSON.stringify(this.users));
+      this.LoggedUser$.next(user);
+      this.isLoggedIn$.next(true);
+      localStorage.setItem(this.LOGGED_USER_KEY, JSON.stringify(user));
+      this.router.navigate(['']);
+    }else {
+      alert("There is a user already registered using this same mail");
+    }
+
   }
 
   login(name: string, email: string): void {
@@ -45,15 +53,18 @@ export class AuthService {
     if (user) {
       this.LoggedUser$.next(user);
       this.isLoggedIn$.next(true);
+      localStorage.setItem(this.LOGGED_USER_KEY, JSON.stringify(user));
       this.router.navigate(['']);
     }else{
-      console.log("User not found");
+      alert("User not found");
     }
   }
 
   logout(): void {
     this.isLoggedIn$.next(false);
-    this.router.navigate(['signin']);
+    this.LoggedUser$.next(null);
+    localStorage.removeItem(this.LOGGED_USER_KEY);
+    this.router.navigate(['login']);
   }
   
 }

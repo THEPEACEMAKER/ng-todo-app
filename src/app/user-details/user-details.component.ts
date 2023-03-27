@@ -9,7 +9,7 @@ import { User } from '../auth/user';
   styleUrls: ['./user-details.component.css']
 })
 export class UserDetailsComponent {
-  user:BehaviorSubject<User> = this.AuthService.LoggedUser$;
+  user:BehaviorSubject<User | null> = this.AuthService.LoggedUser$;
 
   constructor(private AuthService: AuthService) { }
 

@@ -13,8 +13,8 @@ import { TodosSummary } from '../todos-summary';
 export class TodoListComponent {
   title: string = 'todo-app';
   subscription!: Subscription;
-  name!:string;
-  quote!:string;
+  name!:string | undefined;
+  quote!:string | undefined;
 
   todos$: Observable<Todo[]> = this.TodosService.getSelectedTodos$();
   todosSummary$: Observable<TodosSummary> = this.TodosService.getTodosSummary$();
@@ -23,7 +23,8 @@ export class TodoListComponent {
     
   ngOnInit(): void {
 		this.subscription = this.AuthService.LoggedUser$.subscribe(user => {
-      this.name = user.name; this.quote = user.quote;
+      this.name = user?.name;
+      this.quote = user?.quote;
     });
   }
 

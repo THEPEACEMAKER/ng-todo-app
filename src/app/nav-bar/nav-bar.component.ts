@@ -10,7 +10,7 @@ import { User } from '../auth/user';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent {
-  user:BehaviorSubject<User> = this.AuthService.LoggedUser$;
+  user:BehaviorSubject<User | null> = this.AuthService.LoggedUser$;
 
   constructor(private TodosService: TodosService, private AuthService: AuthService) { }
   isLoggedIn: BehaviorSubject<boolean> = this.AuthService.isAuthenticated$();

@@ -135,10 +135,10 @@ export class TodosService {
 
   deletedTodos: Todo[] = [];
 
-  LoggedUserId!: number;
+  LoggedUserId!: number | undefined;
   
   constructor(private AuthService: AuthService) {
-    this.AuthService.LoggedUser$.subscribe(user => this.LoggedUserId = user.id);
+    this.AuthService.LoggedUser$.subscribe(user => this.LoggedUserId = user?.id);
   }
 
   statusSelected = new BehaviorSubject<string>('all');
@@ -199,8 +199,10 @@ export class TodosService {
   }
 
   newTodo(todo: Todo): void {
-    todo.id =  !this.todos.length ? 1 : this.todos[this.todos.length - 1].id + 1,
-    todo.userId = this.LoggedUserId;
+    todo.id =  !this.todos.length ? 1 : this.todos[this.todos.length - 1].id + 1;
+    if(this.LoggedUserId){
+      todo.userId = this.LoggedUserId;
+    }
     this.todos.push(todo);
     this.statusSelected.next(this.statusSelected.getValue());
   }
