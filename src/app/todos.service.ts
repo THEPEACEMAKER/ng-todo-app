@@ -39,8 +39,8 @@ export class TodosService {
     }else {
       this.http.get<any>('https://dummyjson.com/todos').subscribe(data => {
         this.todos = data.todos;
+        this.saveTodos();
       });
-      this.saveTodos();
     }
     if (storedDeletedTodos) {
       this.deletedTodos = JSON.parse(storedDeletedTodos);

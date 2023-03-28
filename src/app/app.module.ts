@@ -16,7 +16,8 @@ import { TodosService } from './todos.service';
 import { SignInFormComponent } from './sign-in-form/sign-in-form.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { UserDetailsComponent } from './user-details/user-details.component'
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AddlimitInterceptor } from './addlimit.interceptor';
 
 const routes: Routes = [
   {path:'', component: TodoListComponent, canActivate:[AuthGuard]},
@@ -46,7 +47,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AuthService, AuthGuard, TodosService],
+  providers: [AuthService, AuthGuard, TodosService,
+    { provide: HTTP_INTERCEPTORS, useClass: AddlimitInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
